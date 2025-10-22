@@ -1,0 +1,141 @@
+openapi: 3.0.3
+info:
+  title: API Sekolah - Demo
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /halo:
+    get:
+      summary: Sapa pengguna
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pesan:
+                    type: string
+              examples:
+                contoh:
+                  value: { "pesan": "Halo dari API Sekolah!" }
+
+  /siswa:
+    get:
+      summary: Ambil daftar siswa
+      responses:
+        "200":
+          description: Daftar siswa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Siswa'
+
+    post:
+      summary: Tambah siswa baru
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiswaInput'
+      responses:
+        "201":
+          description: Siswa berhasil dibuat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Siswa'
+
+  /siswa/{id}:
+    get:
+      summary: Ambil siswa berdasarkan ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Detail siswa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Siswa'
+        "404":
+          description: Siswa tidak ditemukan
+
+    put:
+      summary: Perbarui data siswa berdasarkan ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiswaInput'
+      responses:
+        "200":
+          description: Siswa diperbarui
+
+    delete:
+      summary: Hapus siswa berdasarkan ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Siswa dihapus
+
+components:
+  schemas:
+    Siswa:
+      type: object
+      properties:
+        id: { type: integer, example: 1 }
+        nama: { type: string, example: "Muhammad Nabil Putra Ramadhan" }
+        kelas: { type: string, example: "XII SIJA 2" }
+        jurusan: { type: string, example: "Sistem Informasi Jaringan dan Aplikasi" }
+        angkatan: { type: integer, example: 2023 }
+        alamat: { type: string, example: "Griya Kebonagung 1 Sukodono" }
+        nomor_telepon: { type: string, example: "081335535596" }
+        email: { type: string, example: "naputganteng@gmail.com" }
+        tanggal_lahir: { type: string, format: date, example: "2007-09-26" }
+        jenis_kelamin: { type: string, example: "Laki-laki" }
+
+    SiswaInput:
+      type: object
+      required:
+        - nama
+        - kelas
+        - jurusan
+        - angkatan
+        - alamat
+        - nomor_telepon
+        - email
+        - tanggal_lahir
+        - jenis_kelamin
+      properties:
+        nama: { type: string }
+        kelas: { type: string }
+        jurusan: { type: string }
+        angkatan: { type: integer }
+        alamat: { type: string }
+        nomor_telepon: { type: string }
+        email: { type: string }
+        tanggal_lahir: { type: string, format: date }
+        jenis_kelamin: { type: string }
