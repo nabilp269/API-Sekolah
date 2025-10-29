@@ -119,16 +119,7 @@ components:
 
     SiswaInput:
       type: object
-      required:
-        - nama
-        - kelas
-        - jurusan
-        - angkatan
-        - alamat
-        - nomor_telepon
-        - email
-        - tanggal_lahir
-        - jenis_kelamin
+      required: [nama, kelas, jurusan, angkatan, alamat, nomor_telepon, email, tanggal_lahir, jenis_kelamin]
       properties:
         nama: { type: string }
         kelas: { type: string }
